@@ -35,6 +35,18 @@ def save_attachment(file: Path, payload: bytes) -> None:
 def get_eml_files_from(path: Path) -> List[Path]:
     return list(path.glob('*.eml'))
 
+def check_file(arg_value: str) -> Path:
+    file = Path(arg_value)
+    if file.is_file() and file.suffix == '.eml':
+        return file
+    raise ArgumentTypeError(f'"{file}" is not a valid EML file.')
+
+def check_path(arg_value: str) -> Path:
+    path = Path(arg_value)
+    if path.is_dir():
+        return path
+    raise ArgumentTypeError(f'"{path}" is not a valid directory.')
+
 def main():
     parser = ArgumentParser(
         usage='python3 %(prog)s [OPTIONS]',
@@ -44,7 +56,7 @@ def main():
         '-s',
         '--source',
         nargs='+',
-        type=Path,
+        type=check_file,
         default=get_eml_files_from(Path.cwd()),
         metavar='FILE',
         help='EML file or list of EML files. Default: all EML files in CWD.'
@@ -52,7 +64,7 @@ def main():
     parser.add_argument(
         '-d',
         '--destination',
-        type=Path,
+        type=check_path,
         default=Path.cwd(),
         metavar='PATH',
         help='Path to folder where the attachments will be saved. Default: CWD.'
