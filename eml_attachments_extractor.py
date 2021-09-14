@@ -29,10 +29,12 @@ def extract_attachments(file: Path, destination: Path) -> None:
 
 def save_attachment(file: Path, payload: bytes) -> None:
     with file.open('wb') as f:
-        print(f'>> Saving attachment to "{file}"\n')
+        print(f'>> Saving attachment to "{file}"')
         f.write(payload)
 
-def get_eml_files_from(path: Path) -> List[Path]:
+def get_eml_files_from(path: Path, recursively: bool = False) -> List[Path]:
+    if recursively:
+        return list(path.rglob('*.eml'))
     return list(path.glob('*.eml'))
 
 def check_file(arg_value: str) -> Path:
@@ -50,16 +52,31 @@ def check_path(arg_value: str) -> Path:
 def main():
     parser = ArgumentParser(
         usage='python3 %(prog)s [OPTIONS]',
-        description='Extracts attachments from EML files',
+        description='Extracts attachments from .eml files'
     )
-    parser.add_argument(
+    # force the use of --source or --files, not both
+    source_group = parser.add_mutually_exclusive_group()
+    source_group.add_argument(
         '-s',
         '--source',
+        type=check_path,
+        default=Path.cwd(),
+        metavar='PATH',
+        help='the directory containing the .eml files to extract attachments (default: current working directory)'
+    )
+    parser.add_argument(
+        '-r',
+        '--recursive',
+        action='store_true',
+        help='allow recursive search for .eml files under SOURCE directory'
+    )
+    source_group.add_argument(
+        '-f',
+        '--files',
         nargs='+',
         type=check_file,
-        default=get_eml_files_from(Path.cwd()),
         metavar='FILE',
-        help='EML file or list of EML files. Default: all EML files in CWD.'
+        help='specify a .eml file or a list of .eml files to extract attachments'
     )
     parser.add_argument(
         '-d',
@@ -67,11 +84,11 @@ def main():
         type=check_path,
         default=Path.cwd(),
         metavar='PATH',
-        help='Path to folder where the attachments will be saved. Default: CWD.'
+        help='the directory to extract attachments into (default: current working directory)'
     )
     args = parser.parse_args()
 
-    eml_files = args.source
+    eml_files = args.files or get_eml_files_from(args.source, args.recursive)
     if not eml_files:
         print(f'No EML files found!')
 
