@@ -1,5 +1,6 @@
+import re
 from argparse import ArgumentParser, ArgumentTypeError
-from email import policy, message_from_file
+from email import message_from_file, policy
 from pathlib import Path
 from typing import List
 
@@ -9,7 +10,7 @@ def extract_attachments(file: Path, destination: Path) -> None:
     with file.open() as f:
         email_message = message_from_file(f, policy=policy.default)
         email_subject = email_message.get('Subject')
-        basepath = destination / email_subject
+        basepath = destination / sanitize_foldername(email_subject)
         # ignore inline attachments
         attachments = [item for item in email_message.iter_attachments() if item.is_attachment()]
         if not attachments:
@@ -26,6 +27,10 @@ def extract_attachments(file: Path, destination: Path) -> None:
             else:
                 basepath.mkdir(exist_ok=True)
                 save_attachment(filepath, payload)
+
+def sanitize_foldername(name: str) -> str:
+    illegal_chars = r'[/\\|\[\]\{\}:<>+=;,?!*"~#$%&@\']'
+    return re.sub(illegal_chars, '_', name)
 
 def save_attachment(file: Path, payload: bytes) -> None:
     with file.open('wb') as f:
