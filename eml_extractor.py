@@ -56,7 +56,7 @@ def check_path(arg_value: str) -> Path:
 
 def main():
     parser = ArgumentParser(
-        usage='python3 %(prog)s [OPTIONS]',
+        usage='%(prog)s [OPTIONS]',
         description='Extracts attachments from .eml files'
     )
     # force the use of --source or --files, not both
