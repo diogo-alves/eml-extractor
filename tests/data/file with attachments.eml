@@ -1,0 +1,39 @@
+MIME-Version: 1.0
+Date: Tue, 28 Sep 2021 11:20:12 -0300
+Message-ID: <CABvyoHMB46rJGw4TRpBxugWkghALw_Stn7zSokFEU81L+Xg4-g@mail.gmail.com>
+Subject: Email with attachments
+From: Sender <sender@gmail.com>
+To: receiver@gmail.com
+Content-Type: multipart/mixed; boundary="0000000000006d6a9d05cd0ee930"
+
+--0000000000006d6a9d05cd0ee930
+Content-Type: multipart/alternative; boundary="0000000000006d6a9a05cd0ee92e"
+
+--0000000000006d6a9a05cd0ee92e
+Content-Type: text/plain; charset="UTF-8"
+
+
+
+--0000000000006d6a9a05cd0ee92e
+Content-Type: text/html; charset="UTF-8"
+
+<div dir="ltr"><br></div>
+
+--0000000000006d6a9a05cd0ee92e--
+--0000000000006d6a9d05cd0ee930
+Content-Type: text/plain; charset="US-ASCII"; name="attachment1.txt"
+Content-Disposition: attachment; filename="attachment1.txt"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ku461wnr1
+Content-ID: <f_ku461wnr1>
+
+Y29udGVudCBvZiBhdHRhY2htZW50IDE=
+--0000000000006d6a9d05cd0ee930
+Content-Type: text/plain; charset="US-ASCII"; name="attachment2.txt"
+Content-Disposition: attachment; filename="attachment2.txt"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_ku461bkj0
+Content-ID: <f_ku461bkj0>
+
+Y29udGVudCBvZiBhdHRhY2htZW50IDI=
+--0000000000006d6a9d05cd0ee930--

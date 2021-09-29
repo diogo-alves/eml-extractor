@@ -12,7 +12,7 @@ def extract_attachments(file: Path, destination: Path) -> None:
         email_subject = email_message.get('Subject')
         basepath = destination / sanitize_foldername(email_subject)
         # ignore inline attachments
-        attachments = [item for item in email_message.iter_attachments() if item.is_attachment()]
+        attachments = [item for item in email_message.iter_attachments() if item.is_attachment()]  # type: ignore
         if not attachments:
             print('>> No attachments found.')
             return
@@ -54,7 +54,7 @@ def check_path(arg_value: str) -> Path:
         return path
     raise ArgumentTypeError(f'"{path}" is not a valid directory.')
 
-def main():
+def get_argument_parser():
     parser = ArgumentParser(
         usage='%(prog)s [OPTIONS]',
         description='Extracts attachments from .eml files'
@@ -89,9 +89,16 @@ def main():
         type=check_path,
         default=Path.cwd(),
         metavar='PATH',
-        help='the directory to extract attachments into (default: current working directory)'
+        help='the directory to extract attachments to (default: current working directory)'
     )
-    args = parser.parse_args()
+    return parser
+
+def parse_arguments():
+    parser = get_argument_parser()
+    return parser.parse_args()
+
+def main():
+    args = parse_arguments()
 
     eml_files = args.files or get_eml_files_from(args.source, args.recursive)
     if not eml_files:

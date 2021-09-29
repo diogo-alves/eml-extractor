@@ -1,0 +1,19 @@
+MIME-Version: 1.0
+Date: Tue, 28 Sep 2021 11:21:38 -0300
+Message-ID: <CABvyoHOxQ6Hxvr72quc=pNf_QJD3MCdbHj+CCSsRRft0ADBB-A@mail.gmail.com>
+Subject: Message without attachments
+From: Sender <sender@gmail.com>
+To: receiver@gmail.com
+Content-Type: multipart/alternative; boundary="000000000000879fad05cd0eee57"
+
+--000000000000879fad05cd0eee57
+Content-Type: text/plain; charset="UTF-8"
+
+
+
+--000000000000879fad05cd0eee57
+Content-Type: text/html; charset="UTF-8"
+
+<div dir="ltr"><br></div>
+
+--000000000000879fad05cd0eee57--
