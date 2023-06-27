@@ -16,13 +16,6 @@ EML Extractor is a CLI tool to extract attachments from .eml files (email messag
 Python 3.6+
 
 
-## Installation
-
-```console
-$ pip install eml-extractor
-```
-
-
 ## Usage
 
 By default, the current working directory is used as the source for .eml files as well as destination for extracted attachments. You can set different optional arguments to change this behavior:
@@ -42,11 +35,8 @@ optional arguments:
   -f FILE [FILE ...], --files FILE [FILE ...]
                         specify an .eml file or a list of .eml files to extract
                         attachments
-  -d PATH, --destination PATH
-                        the directory to extract attachments to (default:
-                        current working directory)
 ```
-
+The destination directory of extracted attachments is the location of the .eml itself. It is made for a large number of files being resided in multiple folders and future processing with index tools and for faster searching later on.
 
 ## Examples
 
